@@ -6,8 +6,8 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/require"
-	"github.com/syafiqah-mr/dcron/dlog"
-	"github.com/syafiqah-mr/dcron/driver"
+	"github.com/syafiqah-grabtaxi/dcron/dlog"
+	"github.com/syafiqah-grabtaxi/dcron/driver"
 	clientv3 "go.etcd.io/etcd/client/v3"
 	"go.etcd.io/etcd/tests/v3/integration"
 )

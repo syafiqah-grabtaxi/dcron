@@ -7,10 +7,10 @@ import (
 	"time"
 
 	"github.com/go-redis/redis/v8"
-	"github.com/syafiqah-mr/dcron"
-	"github.com/syafiqah-mr/dcron/dlog"
-	"github.com/syafiqah-mr/dcron/driver"
-	examplesCommon "github.com/syafiqah-mr/dcron/examples/common"
+	"github.com/syafiqah-grabtaxi/dcron"
+	"github.com/syafiqah-grabtaxi/dcron/dlog"
+	"github.com/syafiqah-grabtaxi/dcron/driver"
+	examplesCommon "github.com/syafiqah-grabtaxi/dcron/examples/common"
 )
 
 type EnvConfig struct {

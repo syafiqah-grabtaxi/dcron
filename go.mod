@@ -1,4 +1,4 @@
-module github.com/syafiqah-mr/dcron
+module github.com/syafiqah-grabtaxi/dcron
 
 go 1.16
 
