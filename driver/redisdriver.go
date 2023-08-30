@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"github.com/go-redis/redis/v8"
-	"github.com/libi/dcron/dlog"
+	"github.com/syafiqah-mr/dcron/dlog"
 )
 
 const (

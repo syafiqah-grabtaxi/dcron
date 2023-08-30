@@ -9,11 +9,11 @@ import (
 	"time"
 
 	"github.com/go-redis/redis/v8"
-	"github.com/libi/dcron"
-	"github.com/libi/dcron/dlog"
-	"github.com/libi/dcron/driver"
 	"github.com/robfig/cron/v3"
 	"github.com/stretchr/testify/require"
+	"github.com/syafiqah-mr/dcron"
+	"github.com/syafiqah-mr/dcron/dlog"
+	"github.com/syafiqah-mr/dcron/driver"
 )
 
 const (
@@ -50,7 +50,7 @@ func runNode(t *testing.T, wg *sync.WaitGroup) {
 	})
 	drv := driver.NewRedisDriver(redisCli)
 	dcron := dcron.NewDcron("server1", drv)
-	//添加多个任务 启动多个节点时 任务会均匀分配给各个节点
+	// 添加多个任务 启动多个节点时 任务会均匀分配给各个节点
 
 	err := dcron.AddFunc("s1 test1", "* * * * *", func() {
 		// 同时启动3个节点 但是一个 job 同一时间只会执行一次 通过 map 判重
@@ -84,7 +84,7 @@ func runNode(t *testing.T, wg *sync.WaitGroup) {
 	}
 	dcron.Start()
 
-	//移除测试
+	// 移除测试
 	dcron.Remove("s1 test3")
 	<-time.After(120 * time.Second)
 	wg.Done()

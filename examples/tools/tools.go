@@ -5,7 +5,7 @@ import (
 	"flag"
 
 	"github.com/go-redis/redis/v8"
-	examplesCommon "github.com/libi/dcron/examples/common"
+	examplesCommon "github.com/syafiqah-mr/dcron/examples/common"
 )
 
 var (

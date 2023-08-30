@@ -6,7 +6,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/libi/dcron/dlog"
+	"github.com/syafiqah-mr/dcron/dlog"
 	"go.etcd.io/etcd/api/v3/mvccpb"
 	clientv3 "go.etcd.io/etcd/client/v3"
 )
@@ -46,7 +46,7 @@ func newEtcdDriver(cli *clientv3.Client) *EtcdDriver {
 
 // 设置key value，绑定租约
 func (e *EtcdDriver) putKeyWithLease(ctx context.Context, key, val string) (clientv3.LeaseID, error) {
-	//设置租约时间，最少5s
+	// 设置租约时间，最少5s
 	if e.lease < etcdDefaultLease {
 		e.lease = etcdDefaultLease
 	}
@@ -57,7 +57,7 @@ func (e *EtcdDriver) putKeyWithLease(ctx context.Context, key, val string) (clie
 	if err != nil {
 		return 0, err
 	}
-	//注册服务并绑定租约
+	// 注册服务并绑定租约
 	_, err = e.cli.Put(subCtx, key, val, clientv3.WithLease(resp.ID))
 	if err != nil {
 		return 0, err
@@ -91,9 +91,9 @@ func (e *EtcdDriver) watcher(serviceName string) {
 	for wresp := range rch {
 		for _, ev := range wresp.Events {
 			switch ev.Type {
-			case mvccpb.PUT: //修改或者新增
+			case mvccpb.PUT: // 修改或者新增
 				e.setServiceList(string(ev.Kv.Key), string(ev.Kv.Value))
-			case mvccpb.DELETE: //删除
+			case mvccpb.DELETE: // 删除
 				e.delServiceList(string(ev.Kv.Key))
 			}
 		}

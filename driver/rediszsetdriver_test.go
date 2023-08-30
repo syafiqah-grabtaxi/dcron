@@ -7,14 +7,14 @@ import (
 
 	"github.com/alicebob/miniredis/v2"
 	"github.com/go-redis/redis/v8"
-	"github.com/libi/dcron/dlog"
-	"github.com/libi/dcron/driver"
 	"github.com/stretchr/testify/require"
+	"github.com/syafiqah-mr/dcron/dlog"
+	"github.com/syafiqah-mr/dcron/driver"
 )
 
 func testFuncNewRedisZSetDriver(addr string) driver.DriverV2 {
-	redisCli := redis.NewClient(&redis.Options{
-		Addr: addr,
+	redisCli := redis.NewClusterClient(&redis.ClusterOptions{
+		Addrs: []string{addr},
 	})
 	return driver.NewRedisZSetDriver(redisCli)
 }

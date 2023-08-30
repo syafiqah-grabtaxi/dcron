@@ -10,9 +10,9 @@ import (
 
 	"github.com/go-redis/redis/v8"
 	"github.com/google/uuid"
-	"github.com/libi/dcron"
-	"github.com/libi/dcron/dlog"
-	"github.com/libi/dcron/driver"
+	"github.com/syafiqah-mr/dcron"
+	"github.com/syafiqah-mr/dcron/dlog"
+	"github.com/syafiqah-mr/dcron/driver"
 )
 
 const (

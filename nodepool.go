@@ -6,9 +6,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/libi/dcron/consistenthash"
-	"github.com/libi/dcron/dlog"
-	"github.com/libi/dcron/driver"
+	"github.com/syafiqah-mr/dcron/consistenthash"
+	"github.com/syafiqah-mr/dcron/dlog"
+	"github.com/syafiqah-mr/dcron/driver"
 )
 
 // NodePool is a node pool

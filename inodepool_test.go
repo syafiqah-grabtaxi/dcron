@@ -8,10 +8,10 @@ import (
 
 	"github.com/alicebob/miniredis/v2"
 	"github.com/go-redis/redis/v8"
-	"github.com/libi/dcron"
-	"github.com/libi/dcron/consistenthash"
-	"github.com/libi/dcron/driver"
 	"github.com/stretchr/testify/suite"
+	"github.com/syafiqah-mr/dcron"
+	"github.com/syafiqah-mr/dcron/consistenthash"
+	"github.com/syafiqah-mr/dcron/driver"
 	clientv3 "go.etcd.io/etcd/client/v3"
 	"go.etcd.io/etcd/tests/v3/integration"
 )
@@ -69,10 +69,10 @@ func (ts *TestINodePoolSuite) declareEtcdDrivers(clients *[]*clientv3.Client, dr
 	}
 }
 
-func (ts *TestINodePoolSuite) declareRedisZSetDrivers(clients *[]*redis.Client, drivers *[]driver.DriverV2, numberOfNodes int) {
+func (ts *TestINodePoolSuite) declareRedisZSetDrivers(clients *[]*redis.ClusterClient, drivers *[]driver.DriverV2, numberOfNodes int) {
 	for i := 0; i < numberOfNodes; i++ {
-		*clients = append(*clients, redis.NewClient(&redis.Options{
-			Addr: ts.rds.Addr(),
+		*clients = append(*clients, redis.NewClusterClient(&redis.ClusterOptions{
+			Addrs: []string{ts.rds.Addr()},
 		}))
 		*drivers = append(*drivers, driver.NewRedisZSetDriver((*clients)[i]))
 	}
@@ -138,7 +138,7 @@ func (ts *TestINodePoolSuite) TestMultiNodesEtcd() {
 }
 
 func (ts *TestINodePoolSuite) TestMultiNodesRedisZSet() {
-	var clients []*redis.Client
+	var clients []*redis.ClusterClient
 	var drivers []driver.DriverV2
 	var nodePools []dcron.INodePool
 
