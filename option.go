@@ -3,8 +3,8 @@ package dcron
 import (
 	"time"
 
-	"github.com/libi/dcron/dlog"
 	"github.com/robfig/cron/v3"
+	"github.com/syafiqah-grabtaxi/dcron/dlog"
 )
 
 // Option is Dcron Option

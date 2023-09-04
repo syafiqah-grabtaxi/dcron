@@ -5,9 +5,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/libi/dcron/dlog"
-	"github.com/libi/dcron/driver"
 	"github.com/stretchr/testify/require"
+	"github.com/syafiqah-grabtaxi/dcron/dlog"
+	"github.com/syafiqah-grabtaxi/dcron/driver"
 	clientv3 "go.etcd.io/etcd/client/v3"
 	"go.etcd.io/etcd/tests/v3/integration"
 )
