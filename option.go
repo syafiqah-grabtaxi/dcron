@@ -3,8 +3,8 @@ package dcron
 import (
 	"time"
 
-	"github.com/libi/dcron/dlog"
 	"github.com/robfig/cron/v3"
+	"github.com/syafiqah-grabtaxi/dcron/dlog"
 )
 
 // Option is Dcron Option
@@ -13,9 +13,9 @@ type Option func(*Dcron)
 // WithLogger both set dcron and cron logger.
 func WithLogger(logger dlog.Logger) Option {
 	return func(dcron *Dcron) {
-		//set dcron logger
+		// set dcron logger
 		dcron.logger = logger
-		//set cron logger
+		// set cron logger
 		f := cron.WithLogger(cron.PrintfLogger(logger))
 		dcron.crOptions = append(dcron.crOptions, f)
 	}
@@ -42,7 +42,7 @@ func WithHashReplicas(d int) Option {
 	}
 }
 
-//CronOptionLocation is warp cron with location
+// CronOptionLocation is warp cron with location
 func CronOptionLocation(loc *time.Location) Option {
 	return func(dcron *Dcron) {
 		f := cron.WithLocation(loc)
@@ -50,7 +50,7 @@ func CronOptionLocation(loc *time.Location) Option {
 	}
 }
 
-//CronOptionSeconds is warp cron with seconds
+// CronOptionSeconds is warp cron with seconds
 func CronOptionSeconds() Option {
 	return func(dcron *Dcron) {
 		f := cron.WithSeconds()
