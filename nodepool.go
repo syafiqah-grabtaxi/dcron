@@ -8,9 +8,9 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/libi/dcron/consistenthash"
-	"github.com/libi/dcron/dlog"
-	"github.com/libi/dcron/driver"
+	"github.com/syafiqah-grabtaxi/dcron/consistenthash"
+	"github.com/syafiqah-grabtaxi/dcron/dlog"
+	"github.com/syafiqah-grabtaxi/dcron/driver"
 )
 
 const (
