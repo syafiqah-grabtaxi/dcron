@@ -94,21 +94,21 @@ func (d *Dcron) GetLogger() dlog.Logger {
 }
 
 // AddJob  add a job
-func (d *Dcron) AddJob(jobName, cronStr string, job Job) (err error) {
+func (d *Dcron) AddJob(jobName, cronStr string, job Job) (entryID int, err error) {
 	return d.addJob(jobName, cronStr, nil, job)
 }
 
 // AddFunc add a cron func
-func (d *Dcron) AddFunc(jobName, cronStr string, cmd func()) (err error) {
+func (d *Dcron) AddFunc(jobName, cronStr string, cmd func()) (entryID int, err error) {
 	return d.addJob(jobName, cronStr, cmd, nil)
 }
-func (d *Dcron) addJob(jobName, cronStr string, cmd func(), job Job) (err error) {
+func (d *Dcron) addJob(jobName, cronStr string, cmd func(), job Job) (int, error) {
 	d.logger.Infof("addJob '%s' : %s", jobName, cronStr)
 
 	d.jobsRWMut.Lock()
 	defer d.jobsRWMut.Unlock()
 	if _, ok := d.jobs[jobName]; ok {
-		return errors.New("jobName already exist")
+		return 0, errors.New("jobName already exist")
 	}
 	innerJob := JobWarpper{
 		Name:    jobName,
@@ -119,11 +119,11 @@ func (d *Dcron) addJob(jobName, cronStr string, cmd func(), job Job) (err error)
 	}
 	entryID, err := d.cr.AddJob(cronStr, innerJob)
 	if err != nil {
-		return err
+		return 0, err
 	}
 	innerJob.ID = entryID
 	d.jobs[jobName] = &innerJob
-	return nil
+	return int(entryID), nil
 }
 
 // Remove Job
@@ -188,14 +188,15 @@ func (d *Dcron) startNodePool() error {
 }
 
 // Stop job
-func (d *Dcron) Stop() {
+func (d *Dcron) Stop() context.Context {
 	tick := time.NewTicker(time.Millisecond)
 	d.nodePool.Stop(context.Background())
 	for range tick.C {
 		if atomic.CompareAndSwapInt32(&d.running, dcronRunning, dcronStopped) {
-			d.cr.Stop()
 			d.logger.Infof("dcron stopped")
-			return
+			return d.cr.Stop()
 		}
 	}
+
+	return nil
 }
