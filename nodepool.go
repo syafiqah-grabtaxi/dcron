@@ -102,6 +102,7 @@ func (np *NodePool) waitingForHashRing() {
 			nowNodes, err := np.driver.GetNodes(context.Background())
 			if err != nil {
 				np.logger.Errorf("get nodes error %v", err)
+				np.updateHashRing([]string{}) // empty hash ring if there is an error to prevent job execution
 				continue
 			}
 			np.updateHashRing(nowNodes)
