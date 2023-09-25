@@ -52,11 +52,14 @@ type Dcron struct {
 }
 
 // NewDcron create a Dcron
-func NewDcron(serverName string, driver driver.DriverV2, cronOpts ...cron.Option) *Dcron {
+func NewDcron(serverName string, driver driver.DriverV2, logger dlog.Logger, cronOpts ...cron.Option) *Dcron {
 	dcron := newDcron(serverName)
 	dcron.crOptions = cronOpts
 	dcron.cr = cron.New(cronOpts...)
 	dcron.running = dcronStopped
+	if logger != nil {
+		dcron.SetLogger(logger)
+	}
 	dcron.nodePool = NewNodePool(serverName, driver, dcron.nodeUpdateDuration, dcron.hashReplicas, dcron.logger)
 	return dcron
 }
