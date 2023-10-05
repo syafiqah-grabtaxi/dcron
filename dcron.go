@@ -174,6 +174,12 @@ func (d *Dcron) Start() {
 			atomic.StoreInt32(&d.running, dcronStopped)
 			return
 		}
+
+		// jobs might be executed more than once between hash ring updates
+		// hence, sleep for the duration of node updates to ensure that all nodes get the updated ring
+		// preventing double execution is prioritised over missed jobs here
+		time.Sleep(d.nodeUpdateDuration)
+
 		d.cr.Start()
 		d.logger.Infof("dcron started, nodeID is %s", d.nodePool.GetNodeID())
 	} else {
