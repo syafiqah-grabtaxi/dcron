@@ -178,10 +178,9 @@ func (d *Dcron) Start() {
 		// jobs might be executed more than once between hash ring updates
 		// hence, sleep for the duration of node updates to ensure that all nodes get the updated ring
 		// preventing double execution is prioritised over missed jobs here
-		d.logger.Infof("Sleeping for %+v", d.nodeUpdateDuration)
-		time.Sleep(d.nodeUpdateDuration)
-		d.logger.Infof("Done sleeping for %+v", d.nodeUpdateDuration)
-
+		d.logger.Infof("Sleeping for %+v", d.nodeUpdateDuration*5)
+		time.Sleep(d.nodeUpdateDuration * 5)
+		d.logger.Infof("Done sleeping for %+v", d.nodeUpdateDuration*5)
 
 		d.cr.Start()
 		d.logger.Infof("dcron started, nodeID is %s", d.nodePool.GetNodeID())
