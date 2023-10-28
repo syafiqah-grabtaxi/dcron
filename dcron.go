@@ -223,6 +223,7 @@ func (d *Dcron) Stop() context.Context {
 		if atomic.CompareAndSwapInt32(&d.running, dcronRunning, dcronStopped) {
 			d.logger.Infof("dcron stopped")
 			ctx = d.cr.Stop()
+			break
 		}
 	}
 
