@@ -217,16 +217,17 @@ func (d *Dcron) startNodePool() error {
 
 // Stop job
 func (d *Dcron) Stop() context.Context {
+	var ctx context.Context
 	tick := time.NewTicker(time.Millisecond)
-	d.nodePool.Stop(context.Background())
 	for range tick.C {
 		if atomic.CompareAndSwapInt32(&d.running, dcronRunning, dcronStopped) {
 			d.logger.Infof("dcron stopped")
-			return d.cr.Stop()
+			ctx = d.cr.Stop()
 		}
 	}
 
-	return nil
+	time.Sleep(time.Minute * 1)
+	return ctx
 }
 
 func (d *Dcron) reRunRecentJobs(jobNames []string) {
