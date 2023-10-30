@@ -160,15 +160,15 @@ func runSecondNodeWithLogger(id string, wg *sync.WaitGroup, runningTime time.Dur
 		)),
 	)
 	var err error
-	err = dcr.AddFunc("job1", "*/5 * * * * *", func() {
+	_, err = dcr.AddFunc("job1", "*/5 * * * * *", func() {
 		t.Log(time.Now())
 	})
 	require.Nil(t, err)
-	err = dcr.AddFunc("job2", "*/8 * * * * *", func() {
+	_, err = dcr.AddFunc("job2", "*/8 * * * * *", func() {
 		panic("test panic")
 	})
 	require.Nil(t, err)
-	err = dcr.AddFunc("job3", "*/2 * * * * *", func() {
+	_, err = dcr.AddFunc("job3", "*/2 * * * * *", func() {
 		t.Log("job3:", time.Now())
 	})
 	require.Nil(t, err)
@@ -216,15 +216,15 @@ func Test_WithClusterStableNodes(t *testing.T) {
 			dcron.WithNodeUpdateDuration(timeWindow),
 		)
 		var err error
-		err = dcr.AddFunc("job1", "*/3 * * * * *", func() {
+		_, err = dcr.AddFunc("job1", "*/3 * * * * *", func() {
 			t.Log(time.Now())
 		})
 		require.Nil(t, err)
-		err = dcr.AddFunc("job2", "*/8 * * * * *", func() {
+		_, err = dcr.AddFunc("job2", "*/8 * * * * *", func() {
 			t.Logf("job2: %v", time.Now())
 		})
 		require.Nil(t, err)
-		err = dcr.AddFunc("job3", "* * * * * *", func() {
+		_, err = dcr.AddFunc("job3", "* * * * * *", func() {
 			t.Log("job3:", time.Now())
 		})
 		require.Nil(t, err)
